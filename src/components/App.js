@@ -1,18 +1,19 @@
+import React from 'react';
+import { connect } from 'react-redux';
 
+import { fetchPosts } from '../actions/posts';
+import { PostsList } from './';
 
-
-import React, { Component } from 'react';
-import {connect} from 'react-redux'
-import {fetchPosts} from '../actions/posts'
-class App extends Component {
+class App extends React.Component {
   componentDidMount() {
-    console.log("dsfsdf")
     this.props.dispatch(fetchPosts());
   }
+
   render() {
+    const { posts } = this.props;
     return (
       <div>
-        APP
+        <PostsList posts={posts} />
       </div>
     );
   }
@@ -20,11 +21,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    posts: state.posts
-  }
-
+    posts: state.posts,
+  };
 }
-
-
-
 export default connect(mapStateToProps)(App);
