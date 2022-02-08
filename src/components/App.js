@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { fetchPosts } from '../actions/posts';
-import { PostsList } from './';
+import  PostsList   from './PostsList';
 
 class App extends React.Component {
   componentDidMount() {
