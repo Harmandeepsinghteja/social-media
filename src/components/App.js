@@ -9,14 +9,12 @@ import  PostsList   from './PostsList';
 import  Home  from './Home';
 import  Navbar  from './Navbar';
 import Page404 from './Page404';
-
+import Login  from './Login';
 // const Home = () => {
 // return <div>Home</div>
 // }
 
-function Login() {
-  return <h2>About</h2>;
-}
+
 function Signup() {
   return <h2>Sign Up</h2>;
 }
