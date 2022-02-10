@@ -24,7 +24,7 @@ export default function auth(state = initialAuthState, action) {
     case LOGIN_FAILURE:
       return {
         ...state,
-        inProgress: true,
+        inProgress: false,
         error: action.error
       };
 
