@@ -1,5 +1,14 @@
+import {
+  LOGIN_START,
+  LOGIN_FAILURE,
+  LOGIN_SUCCESS,
+  AUTHENTICATE_USER,
+  LOG_OUT,
+  SIGNUP_START,
+  SIGNUP_FAILED,
+  SIGNUP_SUCCESS,
+} from './actionTypes';
 import { APIUrls } from '../helpers/urls';
-import { LOGIN_START, LOGIN_FAILURE, LOGIN_SUCCESS} from './actionTypes';
 import { getFormBody } from '../helpers/utils';
 
 export function startLogin() {
@@ -11,42 +20,98 @@ export function startLogin() {
 export function loginFailed(errorMessage) {
   return {
     type: LOGIN_FAILURE,
-    error: errorMessage
+    error: errorMessage,
   };
 }
 
 export function loginSuccess(user) {
   return {
     type: LOGIN_SUCCESS,
-    user
+    user,
   };
 }
 
-
-
 export function login(email, password) {
   return (dispatch) => {
-      dispatch(startLogin());
+    dispatch(startLogin());
     const url = APIUrls.login();
     fetch(url, {
       method: 'POST',
       header: {
         'Content-Type': 'application/x-www/form-urlencoded',
       },
-      body: getFormBody({email, password}),
+      body: getFormBody({ email, password }),
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log('data', data);
-      if(data.success) {
-        dispatch(loginSuccess(data.data.user));
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('data', data);
+        if (data.success) {
+          dispatch(loginSuccess(data.data.user));
+        } else {
+          dispatch(loginFailed(data.message));
+        }
+      });
+  };
+}
 
-      }
-      else {
-        dispatch(loginFailed(data.message))
-      }
-      
+export function authenticateUser(user) {
+  return {
+    type: AUTHENTICATE_USER,
+    user,
+  };
+}
 
+export function logoutUser() {
+  return {
+    type: LOG_OUT,
+  };
+}
+
+export function signup(email, password, confirmPassword, name) {
+  return (dispatch) => {
+    const url = APIUrls.signup();
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: getFormBody({
+        email,
+        password,
+        confirm_password: confirmPassword,
+        name,
+      }),
     })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log('data', data);
+        if (data.success) {
+          // do something
+          localStorage.setItem('token', data.data.token);
+          dispatch(signupSuccessful(data.data.user));
+          return;
+        }
+        dispatch(signupFailed(data.message));
+      });
+  };
+}
+
+export function startSingup() {
+  return {
+    type: SIGNUP_START,
+  };
+}
+
+export function signupFailed(error) {
+  return {
+    type: SIGNUP_FAILED,
+    error,
+  };
+}
+
+export function signupSuccessful(user) {
+  return {
+    type: SIGNUP_SUCCESS,
+    user,
   };
 }

@@ -10,14 +10,13 @@ import  Home  from './Home';
 import  Navbar  from './Navbar';
 import Page404 from './Page404';
 import Login  from './Login';
+import  Signup  from './Signup';
 // const Home = () => {
 // return <div>Home</div>
 // }
 
 
-function Signup() {
-  return <h2>Sign Up</h2>;
-}
+
 
 
 class App extends React.Component {
