@@ -33,14 +33,29 @@ export function loginSuccess(user) {
 
 export function login(email, password) {
   return (dispatch) => {
+    const body = {
+      email: "harmandeep@gmail.com",
+      password: '1234',
+    };
+    
+ 
+    var formBody = [];
+    for (var key in body) {
+      var encodedKey = encodeURI(key);
+      var encodedValue = encodeURI(body[key]);
+      formBody.push(encodedKey + '=' + encodedValue);
+    }
+
+    formBody = formBody.join('&');
+    console.log(formBody);
     dispatch(startLogin());
     const url = APIUrls.login();
     fetch(url, {
       method: 'POST',
       header: {
-        'Content-Type': 'application/x-www/form-urlencoded',
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
       },
-      body: getFormBody({ email, password }),
+      body: formBody,
     })
       .then((response) => response.json())
       .then((data) => {

@@ -1,17 +1,23 @@
-
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import { logoutUser } from '../actions/auth';
 
-import React from 'react';
-
-function Navbar(props) {
+class Navbar extends Component {
+  logout = () => {
+    localStorage.removeItem('token');
+    this.props.dispatch(logoutUser());
+  };
+  render() {
+    const { auth } = this.props;
     return (
       <nav className="nav">
         <div className="left-div">
-            <Link to="/" >
-          <img
-            src="https://ninjasfiles.s3.amazonaws.com/0000000000003454.png"
-            alt="logo"
-          />
+          <Link to="/">
+            <img
+              src="https://ninjasfiles.s3.amazonaws.com/0000000000003454.png"
+              alt="logo"
+            />
           </Link>
         </div>
         <div className="search-container">
@@ -42,25 +48,46 @@ function Navbar(props) {
           </div>
         </div>
         <div className="right-nav">
-          <div className="user">
-            <img
-              src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-              alt="user-dp"
-              id="user-dp"
-            />
-            <span>John Doe</span>
-          </div>
+          {auth.isLoggedin && (
+            <div className="user">
+              <img
+                src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
+                alt="user-dp"
+                id="user-dp"
+              />
+              <span>{auth.user.name}</span>
+            </div>
+          )}
+
           <div className="nav-links">
             <ul>
-              <li><Link to="/login">Login In</Link> </li>
-              <li><Link to="/logout">Login Out</Link></li>
-              <li><Link to="/signup">Sign Up</Link></li>
-              
+              {!auth.isLoggedin && (
+                <li>
+                  <Link to="/login">Login In</Link>{' '}
+                </li>
+              )}
+              {auth.isLoggedin && (
+                <li onClick={this.logout}>
+                  <Link to="/logout">Login Out</Link>
+                </li>
+              )}
+              {!auth.isLoggedin && (
+                <li>
+                  <Link to="/signup">Sign Up</Link>
+                </li>
+              )}
             </ul>
           </div>
         </div>
       </nav>
     );
+  }
 }
 
-export default Navbar;
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
+}
+
+export default connect(mapStateToProps)(Navbar);
