@@ -7,6 +7,7 @@ import {
   SIGNUP_START,
   SIGNUP_FAILED,
   SIGNUP_SUCCESS,
+  CLEAR_AUTH_STATE,
 } from './actionTypes';
 import { APIUrls } from '../helpers/urls';
 import { getFormBody } from '../helpers/utils';
@@ -34,7 +35,7 @@ export function loginSuccess(user) {
 export function login(email, password) {
   return (dispatch) => {
     const body = {
-      email: "harmandeep@gmail.com",
+      email: "harman@gmail.com",
       password: '1234',
     };
     
@@ -52,7 +53,7 @@ export function login(email, password) {
     const url = APIUrls.login();
     fetch(url, {
       method: 'POST',
-      header: {
+      headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
       },
       body: formBody,
@@ -128,5 +129,11 @@ export function signupSuccessful(user) {
   return {
     type: SIGNUP_SUCCESS,
     user,
+  };
+}
+
+export function clearAuthState() {
+  return {
+    type: CLEAR_AUTH_STATE,
   };
 }
