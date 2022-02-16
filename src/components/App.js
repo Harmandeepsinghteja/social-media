@@ -17,12 +17,13 @@ import Navbar from './Navbar';
 import Page404 from './Page404';
 import Login from './Login';
 import Signup from './Signup';
+import Settings  from './Settings';
 import { authenticateUser } from '../actions/auth';
 // const Home = () => {
 // return <div>Home</div>
 // }
 
-const Settings = () => <div>Settings</div>;
+
 // const PrivateRoute = (privateRouteProps) => {
 //   const { isLoggedin, path, component: Component } = privateRouteProps;
  
