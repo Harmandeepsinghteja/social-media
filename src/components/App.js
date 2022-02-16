@@ -17,22 +17,24 @@ import Navbar from './Navbar';
 import Page404 from './Page404';
 import Login from './Login';
 import Signup from './Signup';
-import Settings  from './Settings';
+import Settings from './Settings';
 import { authenticateUser } from '../actions/auth';
 // const Home = () => {
 // return <div>Home</div>
 // }
 
-
 // const PrivateRoute = (privateRouteProps) => {
 //   const { isLoggedin, path, component: Component } = privateRouteProps;
- 
- 
 //   return (
 //     <Route
 //       path={path}
 //       element={(props) => {
-//         return isLoggedin ? <Component {...props} /> : <Navigate to="/login" />;
+//         return isLoggedin ? <Component {...props} /> : <Redirect to={{
+//           pathname: '/login',
+//           state: {
+//             from: props.location,
+//           }
+//         }} />;
 //       }}
 //     />
 //   );
