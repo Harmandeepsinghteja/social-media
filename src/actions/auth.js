@@ -8,9 +8,11 @@ import {
   SIGNUP_FAILED,
   SIGNUP_SUCCESS,
   CLEAR_AUTH_STATE,
+  EDIT_USER_FAILED,
+  EDIT_USER_SUCCESSFULL,
 } from './actionTypes';
 import { APIUrls } from '../helpers/urls';
-import { getFormBody } from '../helpers/utils';
+import { getAuthtokenFromLocalStorage, getFormBody } from '../helpers/utils';
 
 export function startLogin() {
   return {
@@ -35,11 +37,10 @@ export function loginSuccess(user) {
 export function login(email, password) {
   return (dispatch) => {
     const body = {
-      email: "harman@gmail.com",
+      email: 'harman@gmail.com',
       password: '1234',
     };
-    
- 
+
     var formBody = [];
     for (var key in body) {
       var encodedKey = encodeURI(key);
@@ -135,5 +136,51 @@ export function signupSuccessful(user) {
 export function clearAuthState() {
   return {
     type: CLEAR_AUTH_STATE,
+  };
+}
+
+export function editUserSuccessfull(user) {
+  return {
+    type: EDIT_USER_SUCCESSFULL,
+    user,
+  };
+}
+
+export function editUserFailed(error) {
+  return {
+    type: EDIT_USER_SUCCESSFULL,
+    error,
+  };
+}
+
+export function editUser(name, passord, confirmPassword, userId) {
+  return (dispatch) => {
+    const url = APIUrls.editProfile();
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${getAuthtokenFromLocalStorage()}`,
+      },
+      body: getFormBody({
+        name,
+        passord,
+        confirm_password: confirmPassword,
+        id: userId,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('data', data);
+        if (data.success) {
+          dispatch(editUserSuccessfull(data.user));
+          if (data.data.token) {
+            localStorage.setItem('token', data.data.token);
+          }
+          return;
+        }
+
+        dispatch(editUserFailed(data.message));
+      });
   };
 }

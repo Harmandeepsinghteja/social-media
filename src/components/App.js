@@ -19,6 +19,7 @@ import Login from './Login';
 import Signup from './Signup';
 import Settings from './Settings';
 import { authenticateUser } from '../actions/auth';
+import { getAuthtokenFromLocalStorage } from '../helpers/utils';
 // const Home = () => {
 // return <div>Home</div>
 // }
@@ -42,7 +43,7 @@ import { authenticateUser } from '../actions/auth';
 class App extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
-    const token = localStorage.getItem('token');
+    const token = getAuthtokenFromLocalStorage();
 
     if (token) {
       const user = jwtDecode(token);
