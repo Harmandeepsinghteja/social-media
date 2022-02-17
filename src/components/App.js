@@ -18,8 +18,10 @@ import Page404 from './Page404';
 import Login from './Login';
 import Signup from './Signup';
 import Settings from './Settings';
+import UserProfile from './UserProfile';
 import { authenticateUser } from '../actions/auth';
 import { getAuthtokenFromLocalStorage } from '../helpers/utils';
+
 // const Home = () => {
 // return <div>Home</div>
 // }
@@ -43,19 +45,21 @@ import { getAuthtokenFromLocalStorage } from '../helpers/utils';
 class App extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
-    const token = getAuthtokenFromLocalStorage();
 
-    if (token) {
-      const user = jwtDecode(token);
-      console.log(user);
-      this.props.dispatch(
-        authenticateUser({
-          email: user.email,
-          _id: user._id,
-          name: user.name,
-        })
-      );
-    }
+    // TODO
+    // const token = getAuthtokenFromLocalStorage();
+
+    // if (token) {
+    //   const user = jwtDecode(token);
+    //   console.log(user);
+    //   this.props.dispatch(
+    //     authenticateUser({
+    //       email: user.email,
+    //       _id: user._id,
+    //       name: user.name,
+    //     })
+    //   );
+    // }
   }
 
   render() {
@@ -70,6 +74,7 @@ class App extends React.Component {
 
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/user" element={<UserProfile />} />
             <Route
               path="/settings"
               element={<Settings />}

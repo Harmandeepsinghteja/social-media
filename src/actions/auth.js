@@ -61,8 +61,9 @@ export function login(email, password) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('data', data);
+       
         if (data.success) {
+           localStorage.setItem('token', data.data.token);
           dispatch(loginSuccess(data.data.user));
         } else {
           dispatch(loginFailed(data.message));
@@ -104,6 +105,7 @@ export function signup(email, password, confirmPassword, name) {
         // console.log('data', data);
         if (data.success) {
           // do something
+          console.log('$$$', data.data.token)
           localStorage.setItem('token', data.data.token);
           dispatch(signupSuccessful(data.data.user));
           return;
@@ -171,7 +173,7 @@ export function editUser(name, passord, confirmPassword, userId) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('data', data);
+        console.log('Editdata', data);
         if (data.success) {
           dispatch(editUserSuccessfull(data.user));
           if (data.data.token) {
