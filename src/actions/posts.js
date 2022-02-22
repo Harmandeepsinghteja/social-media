@@ -1,5 +1,6 @@
 import { UPDATE_POSTS } from './actionTypes';
-import  {APIUrls}  from '../helpers/urls'
+import { APIUrls } from '../helpers/urls';
+
 export function fetchPosts() {
   return (dispatch) => {
     const url = APIUrls.fetchPosts();
@@ -14,7 +15,7 @@ export function fetchPosts() {
   };
 }
 
-export  function updatePosts(posts) {
+export function updatePosts(posts) {
   return {
     type: UPDATE_POSTS,
     posts,

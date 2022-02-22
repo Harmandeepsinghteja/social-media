@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
 import { connect } from 'react-redux';
-import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 import { logoutUser } from '../actions/auth';
 
-class Navbar extends Component {
-  logout = () => {
+class Navbar extends React.Component {
+  logOut = () => {
     localStorage.removeItem('token');
     this.props.dispatch(logoutUser());
   };
+
   render() {
     const { auth } = this.props;
     return (
@@ -51,11 +53,11 @@ class Navbar extends Component {
           {auth.isLoggedin && (
             <div className="user">
               <Link to="/settings">
-              <img
-                src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-                alt="user-dp"
-                id="user-dp"
-              />
+                <img
+                  src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
+                  alt="user-dp"
+                  id="user-dp"
+                />
               </Link>
               <span>{auth.user.name}</span>
             </div>
@@ -65,17 +67,15 @@ class Navbar extends Component {
             <ul>
               {!auth.isLoggedin && (
                 <li>
-                  <Link to="/login">Login In</Link>{' '}
+                  <Link to="/login">Log in</Link>
                 </li>
               )}
-              {auth.isLoggedin && (
-                <li onClick={this.logout}>
-                  <Link to="/logout">Login Out</Link>
-                </li>
-              )}
+
+              {auth.isLoggedin && <li onClick={this.logOut}>Log out</li>}
+
               {!auth.isLoggedin && (
                 <li>
-                  <Link to="/signup">Sign Up</Link>
+                  <Link to="/signup">Register</Link>
                 </li>
               )}
             </ul>
@@ -91,5 +91,4 @@ function mapStateToProps(state) {
     auth: state.auth,
   };
 }
-
 export default connect(mapStateToProps)(Navbar);

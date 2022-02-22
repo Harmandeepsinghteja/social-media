@@ -1,18 +1,16 @@
-export function getFormBody (params) {
-    let formBody = [];
+export function getFormBody(params) {
+  let formBody = [];
 
-    for(let property in params) {
-        let encodedKey = encodeURIComponent(property);
-        let encodeValue = encodeURIComponent(params[property]);
+  for (let property in params) {
+    let encodedKey = encodeURIComponent(property); // 'user name' => 'user%20name'
+    let encodedValue = encodeURIComponent(params[property]); // aakash 123 => aakash%2020123
 
-        formBody.push(encodeValue + '=' + encodeValue);
-    }
+    formBody.push(encodedKey + '=' + encodedValue);
+  }
 
-    return formBody.join('&');
-    
+  return formBody.join('&'); // 'username=aakash&password=123213'
 }
 
-
-export function getAuthtokenFromLocalStorage () {
-    return localStorage.getItem('token');
+export function getAuthTokenFromLocalStorage() {
+  return localStorage.getItem('token');
 }

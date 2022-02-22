@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-class PostsList extends Component {
-  componentDidMount() {
-    // const {match} = this.props;
+import PropTypes from 'prop-types';
 
-    // if(match.params.userId) {
-      
-    // }
-  }
+class PostsList extends Component {
   render() {
     const { posts } = this.props;
-    // const {match:{params}} = this.props;
     return (
       <div className="posts-list">
         {posts.map((post) => (
@@ -19,10 +12,10 @@ class PostsList extends Component {
             <div className="post-header">
               <div className="post-avatar">
                 <Link to={`/user/${post.user._id}`}>
-                <img
-                  src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
-                  alt="user-pic"
-                />
+                  <img
+                    src="https://image.flaticon.com/icons/svg/2154/2154651.svg"
+                    alt="user-pic"
+                  />
                 </Link>
                 <div>
                   <span className="post-author">{post.user.name}</span>

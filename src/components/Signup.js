@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { startSingup, signup, clearAuthState } from '../actions/auth';
-import { BrowserRouter, Navigate } from 'react-router-dom';
+
 class Signup extends Component {
   constructor(props) {
     super(props);
@@ -12,6 +13,7 @@ class Signup extends Component {
       confirmPassword: '',
     };
   }
+
   componentWillUnmount() {
     this.props.dispatch(clearAuthState());
   }
@@ -33,8 +35,8 @@ class Signup extends Component {
   };
 
   render() {
+    const { inProgress, error, isLoggedin } = this.props.auth;
 
-    const { inProgress, error,isLoggedin } = this.props.auth;
     if (isLoggedin) {
       return <Navigate to="/" />;
     }
