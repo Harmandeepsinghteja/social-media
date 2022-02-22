@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { fetchUserProfile } from '../actions/profile';
 
 class UserProfile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: props.auth.user.name,
-    };
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     name: props.auth.user.name,
+  //   };
+  // }
+
+  componentDidMount() {
+    const {match} = this.props;
+    if(match.params.userId) {
+      this.props.dispatch(fetchUserProfile(match.params.userId));
+    }
   }
 
   handleChange = (fieldName, val) => {
@@ -16,6 +24,14 @@ class UserProfile extends Component {
   };
 
   render() {
+    console.log(this.props);
+    const { profile} = this.props;
+    const user = profile.user;
+
+    if(profile.inProgress) {
+      return <h1>Loading</h1>
+    }
+    // console.log('params', params);
     return (
       <div className="settings">
         <div className="img-container">
@@ -28,12 +44,12 @@ class UserProfile extends Component {
 
         <div className="field">
           <div className="field-label">Name</div>
-          <div className="field-value">Some Name</div>
+          <div className="field-value">{user.name}</div>
         </div>
 
         <div className="field">
           <div className="field-label">Enail</div>
-          <div className="field-value">test@mail.com</div>
+          <div className="field-value">{user.email}</div>
         </div>
 
         <div className="btn-grp">
@@ -44,9 +60,9 @@ class UserProfile extends Component {
   }
 }
 
-function mapStateToProps({ auth }) {
+function mapStateToProps({ profile }) {
   return {
-    auth,
+    profile,
   };
 }
 

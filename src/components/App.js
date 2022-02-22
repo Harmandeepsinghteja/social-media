@@ -74,7 +74,7 @@ class App extends React.Component {
 
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/user" element={<UserProfile />} />
+            <Route path="/user/:userId" element={<UserProfile />} isLoggedin={auth.isLoggedin} />
             <Route
               path="/settings"
               element={<Settings />}
