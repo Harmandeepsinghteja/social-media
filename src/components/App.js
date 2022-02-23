@@ -99,6 +99,7 @@ class App extends React.Component {
               path="/"
               element={
                 <Home
+                  props={this.props}
                   posts={posts}
                   friends={friends}
                   isLoggedin={auth.isLoggedin}

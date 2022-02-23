@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router';
 import  {fetchUserProfile } from '../actions/profile';
 
 class UserProfile extends Component {
   componentDidMount() {
-    const { match } = this.props;
-
-    if (match.params.userId) {
-      // dispatch an action
-      this.props.dispatch(fetchUserProfile(match.params.userId));
-    }
+    // const { match } = this.props;
+  
+    // if (match.params.userId) {
+    //   // dispatch an action
+    //   this.props.dispatch(fetchUserProfile(match.params.userId));
+    // }
+    this.props.dispatch(fetchUserProfile('62126d356938bd457a869fe7'));
   }
 
   checkIfUserIsAFriend = () => {
@@ -18,11 +20,12 @@ class UserProfile extends Component {
 
   render() {
     const {
-      match: { params },
+      // match: { params },
       profile,
     } = this.props;
-    console.log('this.props', params);
+    // console.log('this.props', params);
     const user = profile.user;
+   
 
     if (profile.inProgress) {
       return <h1>Loading!</h1>;
