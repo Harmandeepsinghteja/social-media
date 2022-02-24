@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import { fetchUserProfile } from '../actions/profile';
 import { APIUrls } from '../helpers/urls';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
-import {addFriend} from '../actions/friends'
+import { addFriend, removeFriend } from '../actions/friends';
 const tempUserId = '62126d356938bd457a869fe7';
 
 class UserProfile extends Component {
@@ -13,6 +13,7 @@ class UserProfile extends Component {
     this.state = {
       success: null,
       error: null,
+      successMessage: null,
     };
   }
   componentDidMount() {
@@ -50,21 +51,49 @@ class UserProfile extends Component {
         Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
       },
     };
-     const response = await fetch(url, options);
-     const data = await response.json();
-     if(data.success){
-       this.setState({
-         success: true
-       });
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (data.success) {
+      this.setState({
+        success: true,
+        successMessage: 'Added Friend Successfully'
+      });
 
-       this.props.dispatch(addFriend(data.data.friendship));
-     }
-     else {
-       this.setState({
-         success: null,
-         error: data.message
-       });
-     }
+      this.props.dispatch(addFriend(data.data.friendship));
+    } else {
+      this.setState({
+        success: null,
+        error: data.message,
+      });
+    }
+  };
+
+  handleRemoveFriendClick = async () => {
+    const userId = tempUserId;
+    const url = APIUrls.removeFriend(userId);
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+      },
+    };
+    const response = await fetch(url, options);
+    const data = await response.json();
+    if (data.success) {
+      this.setState({
+        success: true,
+        successMessage: 'Remove Friend Successfully'
+      });
+
+      this.props.dispatch(removeFriend(userId));
+    } else {
+      this.setState({
+        success: null,
+        error: data.message,
+      });
+    }
   };
   render() {
     const {
@@ -105,12 +134,19 @@ class UserProfile extends Component {
               Add Friend
             </button>
           ) : (
-            <button className="button save-btn">Remove Friend</button>
+            <button
+              className="button save-btn"
+              onClick={this.handleRemoveFriendClick}
+            >
+              Remove Friend
+            </button>
           )}
           {success && (
-            <div class="alert success-dialog"> Friend Added Successfully</div>
+            <div class="alert success-dialog">{this.state.successMessage}</div>
           )}
-          {error && <div class="alert error-dialog"> {error}</div>}
+          {error && (
+            <div class="alert error-dialog"> {error}</div>
+          )}
         </div>
       </div>
     );
