@@ -82,7 +82,7 @@ export function createComment(content, postId) {
 
 export function addLike(id, likeType, userId) {
   return (dispatch) => {
-    const url = APIUrls.toggleLike();
+    const url = APIUrls.toggleLike(id, likeType);
     fetch(url, {
       method: 'POST',
       headers: {
