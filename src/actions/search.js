@@ -1,5 +1,5 @@
 import { FETCH_SEARCH_RESULTS_SUCCESS } from './actionTypes';
-import getAuthTokenFromLocalStorage from '../helpers/utils';
+import {getAuthTokenFromLocalStorage} from '../helpers/utils';
 import { APIUrls } from '../helpers/urls';
 
 export function searchUsers(searchText) {
